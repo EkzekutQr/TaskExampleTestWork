@@ -13,10 +13,10 @@ public class UnitSpawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SpawnObjects());
+        SpawnObjects();
     }
 
-    private IEnumerator SpawnObjects()
+    private void SpawnObjects()
     {
         foreach (var obj in _objectToSpawn)
         {
@@ -25,8 +25,6 @@ public class UnitSpawner : MonoBehaviour
                 Vector2 circle = UnityEngine.Random.insideUnitCircle * _spawnRadius;
                 Instantiate(obj.go, obj.go.transform.position + new Vector3(circle.x, 0, circle.y), Quaternion.identity, this.transform).
                     GetComponent<IPushable>().Push(circle, _initialSpeed);
-
-                yield return null;
             }
         }
     }

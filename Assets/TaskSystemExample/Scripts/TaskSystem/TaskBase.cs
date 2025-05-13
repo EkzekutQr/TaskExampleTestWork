@@ -9,16 +9,19 @@ public abstract class TaskBase : MonoBehaviour
     [SerializeField] protected string taskText;
     [SerializeField] private bool isMultypleTask;
 
-    [SerializeField] protected bool isComleted;
+    [SerializeField] protected bool _isComleted;
+    [SerializeField] protected Transform progressBar;
 
     public Action<TaskBase> onTaskCompleted;
 
     public TaskBase NextTask { get => nextTask; set => nextTask = value; }
     public string TaskText { get => taskText; set => taskText = value; }
-    public bool IsComleted { get => isComleted; set => isComleted = value; }
+    public bool IsComleted { get => _isComleted; set => _isComleted = value; }
     public bool IsMultypleTask { get => isMultypleTask; set => isMultypleTask = value; }
 
     public abstract void CompleteClause();
+
+    public abstract float GetProgress();
 
     public virtual void ShowText(TMPro.TextMeshProUGUI taskText)
     {
@@ -29,9 +32,4 @@ public abstract class TaskBase : MonoBehaviour
     //{
     //    onTaskCompleted.
     //}
-}
-
-public abstract class TaskBaseWithProgressBar : TaskBase
-{
-    [SerializeField] protected Transform progressBar;
 }

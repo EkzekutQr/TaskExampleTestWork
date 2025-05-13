@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
-public class ClickToDestroy : MonoBehaviour
+public class ClickToDestroy : MonoBehaviour, IDestroyer
 {
     [SerializeField] private int damagePerClick = 1;
     [SerializeField] private LayerMask layerMask;
+
+    public event Action<GameObject> OnObjectDestroyed;
 
     private void Update()
     {
@@ -18,8 +21,17 @@ public class ClickToDestroy : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, float.PositiveInfinity, layerMask))
         {
-            if (hit.transform.TryGetComponent<IHP>(out IHP hp))
+            if (hit.transform.TryGetComponent<HP>(out HP hp))
+            {
                 hp.TakeDamage(damagePerClick);
+                if (hp.HPCount <= 0)
+                    OnObjectDestroyed?.Invoke(hp.gameObject);
+            }
         }
     }
+}
+
+public interface IDestroyer
+{
+    public event Action<GameObject> OnObjectDestroyed;
 }

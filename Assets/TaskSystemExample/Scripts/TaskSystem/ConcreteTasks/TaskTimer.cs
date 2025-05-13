@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TaskTimer : TaskBaseWithProgressBar
+public class TaskTimer : TaskBase
 {
     [SerializeField] private int seconds = 120;
 
@@ -14,6 +14,8 @@ public class TaskTimer : TaskBaseWithProgressBar
     {
         SetStartTime();
         CheckCompleteClause();
+        if(_isComleted)
+            onTaskCompleted.Invoke(this);
     }
 
     private void SetStartTime()
@@ -28,13 +30,14 @@ public class TaskTimer : TaskBaseWithProgressBar
     private void CheckCompleteClause()
     {
         if (Time.time - _startTime >= seconds)
-            onTaskCompleted.Invoke(this);
+            //onTaskCompleted.Invoke(this);
+            _isComleted = true;
     }
 
-    private float UpdateProgress()
+    public override float GetProgress()
     {
-        float progress = Time.time - _startTime / seconds;
-        if(progress > 1f)
+        float progress = (Time.time - _startTime) / seconds;
+        if (progress > 1f)
             progress = 1f;
 
         return progress;

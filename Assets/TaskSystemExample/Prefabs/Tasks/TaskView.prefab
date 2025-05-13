@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2715017729672129448}
   - component: {fileID: 3896378381470685368}
   m_Layer: 5
-  m_Name: TaskBody
+  m_Name: TaskView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,8 +31,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7159990724944082666}
   - {fileID: 5045311232735280878}
+  - {fileID: 7159990724944082666}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 8882015569030475517}
   progressBar: {fileID: 8376116231496302386}
+  taskBase: {fileID: 0}
 --- !u!1 &1056569130225125040
 GameObject:
   m_ObjectHideFlags: 0
