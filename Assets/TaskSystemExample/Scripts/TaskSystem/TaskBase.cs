@@ -4,8 +4,6 @@ using UnityEngine;
 
 public abstract class TaskBase : MonoBehaviour, IMission
 {
-    [SerializeField] protected TaskBase nextTask;
-    [SerializeField] protected TaskBase previousTask;
     [SerializeField] protected string taskText;
     [SerializeField] private bool isMultypleTask;
 
@@ -13,8 +11,6 @@ public abstract class TaskBase : MonoBehaviour, IMission
     [SerializeField] protected Transform progressBar;
     [SerializeField] private int startDelayTime = 0;
 
-    public TaskBase NextTask { get => nextTask; set => nextTask = value; }
-    public TaskBase PreviousTask { get => previousTask; set => previousTask = value; }
     public string TaskText { get => taskText; }
     public bool IsComleted { get => _isComleted; set => _isComleted = value; }
     public bool IsMultypleTask { get => isMultypleTask; }
@@ -74,8 +70,6 @@ public interface IMission
     bool IsMultypleTask { get; }
     string TaskText { get; }
     int StartDelayTime { get; }
-    TaskBase NextTask { get; set; }
-    TaskBase PreviousTask { get; set; }
 
     event Action<TaskBase> OnStarted;
     event Action<TaskBase> OnMissionPointReached;
