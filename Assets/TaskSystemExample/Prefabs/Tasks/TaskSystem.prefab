@@ -1,5 +1,57 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &117065198838105082
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3361111254942287804}
+  - component: {fileID: 2249331633243880124}
+  m_Layer: 0
+  m_Name: TimeTask (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3361111254942287804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117065198838105082}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1451804698349428863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2249331633243880124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117065198838105082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6662d2958f6c8a344b222af5462c4996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextTask: {fileID: 0}
+  taskText: "\u041F\u0440\u043E\u0431\u044B\u0442\u044C \u0432 \u0438\u0433\u0440\u0435
+    0.1 \u043C\u0438\u043D\u0443\u0442\u044B"
+  isMultypleTask: 0
+  _isComleted: 0
+  progressBar: {fileID: 0}
+  startDelayTime: 10000
+  seconds: 6
 --- !u!1 &119907625382477385
 GameObject:
   m_ObjectHideFlags: 0
@@ -49,6 +101,7 @@ MonoBehaviour:
   isMultypleTask: 0
   _isComleted: 0
   progressBar: {fileID: 0}
+  startDelayTime: 0
   _clickToDestroy: {fileID: 0}
   _specificUnitPrefab: {fileID: 9194394885797644886, guid: 45c766492544aab4695aa07ef947d839, type: 3}
 --- !u!1 &1800485984763338847
@@ -100,6 +153,7 @@ MonoBehaviour:
   isMultypleTask: 1
   _isComleted: 0
   progressBar: {fileID: 0}
+  startDelayTime: 0
   _clickToDestroy: {fileID: 0}
   _specificUnitPrefab: {fileID: 4228630507040780372, guid: 8e5a21f31ceca1145b70ba53009f55ad, type: 3}
 --- !u!1 &2813318141515888355
@@ -229,6 +283,7 @@ MonoBehaviour:
   isMultypleTask: 1
   _isComleted: 0
   progressBar: {fileID: 0}
+  startDelayTime: 0
   seconds: 60
 --- !u!1 &4489431386579440346
 GameObject:
@@ -280,6 +335,7 @@ MonoBehaviour:
   isMultypleTask: 1
   _isComleted: 0
   progressBar: {fileID: 0}
+  startDelayTime: 5000
   seconds: 120
 --- !u!1 &5184920491986912048
 GameObject:
@@ -486,6 +542,7 @@ MonoBehaviour:
   isMultypleTask: 0
   _isComleted: 0
   progressBar: {fileID: 0}
+  startDelayTime: 0
   _clickToDestroy: {fileID: 0}
   _specificUnitPrefab: {fileID: 1158529905781852775, guid: 725dc412daece554d88d9cba07e56400, type: 3}
 --- !u!1 &6005014331524839698
@@ -571,6 +628,7 @@ MonoBehaviour:
   isMultypleTask: 1
   _isComleted: 0
   progressBar: {fileID: 0}
+  startDelayTime: 5000
   _clickToDestroy: {fileID: 0}
   _specificUnitPrefab: {fileID: 4228630507040780372, guid: 8e5a21f31ceca1145b70ba53009f55ad, type: 3}
 --- !u!1 &8792321090594292270
@@ -605,5 +663,6 @@ Transform:
   - {fileID: 6509063541063424608}
   - {fileID: 5158878346946451804}
   - {fileID: 8813622430593338683}
+  - {fileID: 3361111254942287804}
   m_Father: {fileID: 1029097261376814783}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

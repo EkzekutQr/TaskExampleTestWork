@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEditor.VersionControl;
 using UnityEngine;
@@ -12,6 +14,8 @@ public class TaskController : MonoBehaviour
 
     [SerializeField] private TaskLayoutGroup _taskLayoutGroup;
     [SerializeField] private GameObject _TaskViewPrefab;
+
+    private Timer _timer = new Timer();
 
     private void Awake()
     {
@@ -31,22 +35,36 @@ public class TaskController : MonoBehaviour
     {
         foreach (var thread in missionThreads)
         {
-            bool isMultipleTask = true;
-
-            while (isMultipleTask)
-            {
-                IMission currentTask = thread.Tasks[0];
-                currentTask.ParentThread = thread;
-                thread.Tasks.RemoveAt(0);
-                thread.CurrentTasks.Add(currentTask);
-                isMultipleTask = currentTask.IsMultypleTask;
-
-                CreateNewTaskView(currentTask);
-                currentTask.OnFinished += RemoveTaskFromCurrentTasks;
-
-                currentTask.MissionStart();
-            }
+            SetTask(thread);
         }
+    }
+
+    private async void SetTask(MissionThread thread)
+    {
+        bool isMultipleTask = true;
+
+        while (isMultipleTask)
+        {
+            IMission currentTask = thread.Tasks[0];
+
+            await Wait(currentTask);
+
+            currentTask.ParentThread = thread;
+            thread.Tasks.RemoveAt(0);
+            thread.CurrentTasks.Add(currentTask);
+            isMultipleTask = currentTask.IsMultypleTask;
+
+            CreateNewTaskView(currentTask);
+            currentTask.OnFinished += RemoveTaskFromCurrentTasks;
+
+            currentTask.MissionStart();
+        }
+    }
+
+    private async UniTask Wait(IMission task)
+    {
+        UniTask task1 = _timer.StartAsync(task.StartDelayTime);
+        await task1;
     }
 
     private void Update()
@@ -111,20 +129,7 @@ public class TaskController : MonoBehaviour
         if (thread.Tasks.Count == 0)
             return;
 
-        bool isMultipleTask = true;
-
-        while (isMultipleTask)
-        {
-            IMission currentTask = thread.Tasks[0];
-            thread.Tasks.RemoveAt(0);
-            thread.CurrentTasks.Add(currentTask);
-            isMultipleTask = currentTask.IsMultypleTask;
-
-            CreateNewTaskView(currentTask);
-            currentTask.OnFinished += RemoveTaskFromCurrentTasks;
-
-            currentTask.MissionStart();
-        }
+        SetTask(thread);
     }
 
     private void CreateNewTaskView(IMission taskBase)

@@ -5,17 +5,21 @@ using UnityEngine;
 public abstract class TaskBase : MonoBehaviour, IMission
 {
     [SerializeField] protected TaskBase nextTask;
+    [SerializeField] protected TaskBase previousTask;
     [SerializeField] protected string taskText;
     [SerializeField] private bool isMultypleTask;
 
     [SerializeField] protected bool _isComleted;
     [SerializeField] protected Transform progressBar;
+    [SerializeField] private int startDelayTime = 0;
 
     public TaskBase NextTask { get => nextTask; set => nextTask = value; }
-    public string TaskText { get => taskText; set => taskText = value; }
+    public TaskBase PreviousTask { get => previousTask; set => previousTask = value; }
+    public string TaskText { get => taskText; }
     public bool IsComleted { get => _isComleted; set => _isComleted = value; }
-    public bool IsMultypleTask { get => isMultypleTask; set => isMultypleTask = value; }
+    public bool IsMultypleTask { get => isMultypleTask; }
     public MissionThread ParentThread { get; set; }
+    public int StartDelayTime { get => startDelayTime; }
 
     public event Action<TaskBase> OnStarted;
     public event Action<TaskBase> OnMissionPointReached;
@@ -67,8 +71,11 @@ public abstract class TaskBase : MonoBehaviour, IMission
 public interface IMission
 {
     MissionThread ParentThread { get; set; }
-    bool IsMultypleTask { get; set; }
-    string TaskText { get; set; }
+    bool IsMultypleTask { get; }
+    string TaskText { get; }
+    int StartDelayTime { get; }
+    TaskBase NextTask { get; set; }
+    TaskBase PreviousTask { get; set; }
 
     event Action<TaskBase> OnStarted;
     event Action<TaskBase> OnMissionPointReached;
