@@ -20,6 +20,13 @@ public class TaskKillAny : TaskBase
         _clickToDestroy = GameObject.FindFirstObjectByType<ClickToDestroy>();
         _unitMaxCount = GameObject.FindObjectsOfType(_specificUnitPrefab.GetType()).Length;
 
+        if (_unitMaxCount <= 0)
+        {
+            _isComleted = true;
+            RaiseOnMissionPointReached(this);
+            RaiseOnTaskFinished(this);
+        }
+
         _clickToDestroy.OnObjectDestroyed += CheckDestroyedObject;
         OnFinished += _ => _clickToDestroy.OnObjectDestroyed -= CheckDestroyedObject;
         RaiseOnStarted(this);
@@ -50,6 +57,8 @@ public class TaskKillAny : TaskBase
         float progress = 0;
         if (_unitMaxCount > 0)
             progress = (float)_unitCurrentCount / (float)_unitMaxCount;
+        if (_unitMaxCount <= 0)
+            progress = 1;
         return progress;
     }
 }
