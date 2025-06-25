@@ -51,6 +51,57 @@ MonoBehaviour:
   progressBar: {fileID: 0}
   _clickToDestroy: {fileID: 0}
   _specificUnitPrefab: {fileID: 9194394885797644886, guid: 45c766492544aab4695aa07ef947d839, type: 3}
+--- !u!1 &1800485984763338847
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9033734722351652360}
+  - component: {fileID: 8971994330692623129}
+  m_Layer: 0
+  m_Name: KillAnyTask
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9033734722351652360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800485984763338847}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8467528077037587651}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8971994330692623129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800485984763338847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 040a5d8f097e5674c8c98f6848271ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextTask: {fileID: 0}
+  taskText: kill any
+  isMultypleTask: 1
+  _isComleted: 0
+  progressBar: {fileID: 0}
+  _clickToDestroy: {fileID: 0}
+  _specificUnitPrefab: {fileID: 4228630507040780372, guid: 8e5a21f31ceca1145b70ba53009f55ad, type: 3}
 --- !u!1 &2813318141515888355
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,6 +179,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tasksBodies: []
   taskBodyPrefab: {fileID: 1011383794462700, guid: 5f41127bb6e874c41b485d4d58c08a5e, type: 3}
+--- !u!1 &3893631786840287425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8409667907863765222}
+  - component: {fileID: 1615229135523094203}
+  m_Layer: 0
+  m_Name: TimeTask
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8409667907863765222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893631786840287425}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8467528077037587651}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1615229135523094203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893631786840287425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6662d2958f6c8a344b222af5462c4996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextTask: {fileID: 0}
+  taskText: "\u041F\u0440\u043E\u0431\u044B\u0442\u044C \u0432 \u0438\u0433\u0440\u0435
+    1 \u043C\u0438\u043D\u0443\u0442\u0443"
+  isMultypleTask: 1
+  _isComleted: 0
+  progressBar: {fileID: 0}
+  seconds: 60
 --- !u!1 &4489431386579440346
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,6 +415,7 @@ Transform:
   m_Children:
   - {fileID: 1895425392477542649}
   - {fileID: 1451804698349428863}
+  - {fileID: 8467528077037587651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5292937446714407440
@@ -327,12 +430,100 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7db239a5a38ee442870f17cda1edca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tasks: []
-  _tasksParentTransform: {fileID: 1451804698349428863}
+  missionThreads:
+  - _tasks: []
+    _taskViews: []
+    _tasksParentTransform: {fileID: 1451804698349428863}
+  - _tasks: []
+    _taskViews: []
+    _tasksParentTransform: {fileID: 8467528077037587651}
   _taskLayoutGroup: {fileID: 2567443273353439202}
-  _taskViews: []
-  _currentTask: []
   _TaskViewPrefab: {fileID: 1011383794462700, guid: 5f41127bb6e874c41b485d4d58c08a5e, type: 3}
+--- !u!1 &5818445706328854539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3829113068804170722}
+  - component: {fileID: 4925082710833219753}
+  m_Layer: 0
+  m_Name: KillSpecificTask
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3829113068804170722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5818445706328854539}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8467528077037587651}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4925082710833219753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5818445706328854539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c35768a6545f11d4d907086ea52e707a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextTask: {fileID: 0}
+  taskText: kill Specific
+  isMultypleTask: 0
+  _isComleted: 0
+  progressBar: {fileID: 0}
+  _clickToDestroy: {fileID: 0}
+  _specificUnitPrefab: {fileID: 1158529905781852775, guid: 725dc412daece554d88d9cba07e56400, type: 3}
+--- !u!1 &6005014331524839698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8467528077037587651}
+  m_Layer: 0
+  m_Name: TasksThread (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8467528077037587651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6005014331524839698}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8409667907863765222}
+  - {fileID: 9033734722351652360}
+  - {fileID: 3829113068804170722}
+  m_Father: {fileID: 1029097261376814783}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7085511205025388502
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +585,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1451804698349428863}
   m_Layer: 0
-  m_Name: Tasks
+  m_Name: TasksThread
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

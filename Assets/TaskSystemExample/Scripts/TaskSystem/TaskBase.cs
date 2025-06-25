@@ -15,7 +15,8 @@ public abstract class TaskBase : MonoBehaviour, IMission
     public string TaskText { get => taskText; set => taskText = value; }
     public bool IsComleted { get => _isComleted; set => _isComleted = value; }
     public bool IsMultypleTask { get => isMultypleTask; set => isMultypleTask = value; }
-    
+    public MissionThread ParentThread { get; set; }
+
     public event Action<TaskBase> OnStarted;
     public event Action<TaskBase> OnMissionPointReached;
     public event Action<TaskBase> OnFinished;
@@ -65,6 +66,7 @@ public abstract class TaskBase : MonoBehaviour, IMission
 
 public interface IMission
 {
+    MissionThread ParentThread { get; set; }
     bool IsMultypleTask { get; set; }
     string TaskText { get; set; }
 

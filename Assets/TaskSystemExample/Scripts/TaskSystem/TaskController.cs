@@ -2,25 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using static UnityEditor.Progress;
 
 public class TaskController : MonoBehaviour
 {
-    [SerializeField] private List<IMission> _tasks = new List<IMission>();
-    [SerializeField] private Transform _tasksParentTransform;
+    [SerializeField] private List<MissionThread> missionThreads = new List<MissionThread>();
 
     [SerializeField] private TaskLayoutGroup _taskLayoutGroup;
-    [SerializeField] private List<TaskView> _taskViews = new List<TaskView>();
-
-    [SerializeField] private List<IMission> _currentTasks = new List<IMission>();
-
     [SerializeField] private GameObject _TaskViewPrefab;
 
     private void Awake()
     {
-        SetAllTasksFromChilds();
-        SetAllTaskViewsFromChilds();
+        foreach (var thread in missionThreads)
+        {
+            SetAllTasksFromChilds(thread);
+            SetAllTaskViewsFromChilds(thread);
+        }
     }
 
     private void Start()
@@ -30,19 +29,23 @@ public class TaskController : MonoBehaviour
 
     private void SetFirstTask()
     {
-        bool isMultipleTask = true;
-
-        while (isMultipleTask)
+        foreach (var thread in missionThreads)
         {
-            IMission currentTask = _tasks[0];
-            _tasks.RemoveAt(0);
-            _currentTasks.Add(currentTask);
-            isMultipleTask = currentTask.IsMultypleTask;
+            bool isMultipleTask = true;
 
-            CreateNewTaskView(currentTask);
-            currentTask.OnFinished += RemoveTaskFromCurrentTasks;
+            while (isMultipleTask)
+            {
+                IMission currentTask = thread.Tasks[0];
+                currentTask.ParentThread = thread;
+                thread.Tasks.RemoveAt(0);
+                thread.CurrentTasks.Add(currentTask);
+                isMultipleTask = currentTask.IsMultypleTask;
 
-            currentTask.MissionStart();
+                CreateNewTaskView(currentTask);
+                currentTask.OnFinished += RemoveTaskFromCurrentTasks;
+
+                currentTask.MissionStart();
+            }
         }
     }
 
@@ -54,9 +57,12 @@ public class TaskController : MonoBehaviour
 
     private void UpdateTaskProgress()
     {
-        foreach (var view in _taskViews)
+        foreach (var thread in missionThreads)
         {
-            view.UpdateProgressBar(view.TaskBase.GetProgress());
+            foreach (var view in thread.TaskViews)
+            {
+                view.UpdateProgressBar(view.TaskBase.GetProgress());
+            }
         }
     }
 
@@ -65,48 +71,53 @@ public class TaskController : MonoBehaviour
         //if (_isLastTaskCompleted)
         //    return;
 
-        for (int i = 0; i < _currentTasks.Count; i++)
+        foreach (var thread in missionThreads)
         {
-            IMission item = _currentTasks[i];
-            item.MissionUpdate();
+            for (int i = 0; i < thread.CurrentTasks.Count; i++)
+            {
+                IMission mission = thread.CurrentTasks[i];
+                mission.MissionUpdate();
+            }
         }
     }
 
     private void RemoveTaskFromCurrentTasks(IMission taskBase)
     {
         taskBase.OnFinished -= RemoveTaskFromCurrentTasks;
+
+        MissionThread thread = taskBase.ParentThread;
         //Debug.Log($"{taskBase.ToString()} is completed");
-        if (_currentTasks.Contains(taskBase))
+        if (thread.CurrentTasks.Contains(taskBase))
         {
-            _currentTasks.Remove(taskBase);
+            thread.CurrentTasks.Remove(taskBase);
         }
 
-        if(_currentTasks.Count == 0)
+        if (thread.CurrentTasks.Count == 0)
         {
-            for (int i = 0; i < _taskViews.Count; i++)
+            for (int i = 0; i < thread.TaskViews.Count; i++)
             {
-                TaskView item = _taskViews[i];
+                TaskView item = thread.TaskViews[i];
                 item.gameObject.SetActive(false);
             }
-            _taskViews.Clear();
+            thread.TaskViews.Clear();
         }
 
-        if (_currentTasks.Count == 0)
-            SetNextCurrentTask();
+        if (thread.CurrentTasks.Count == 0)
+            SetNextCurrentTask(thread);
     }
 
-    private void SetNextCurrentTask()
+    private void SetNextCurrentTask(MissionThread thread)
     {
-        if (_tasks.Count == 0)
+        if (thread.Tasks.Count == 0)
             return;
 
         bool isMultipleTask = true;
 
         while (isMultipleTask)
         {
-            IMission currentTask = _tasks[0];
-            _tasks.RemoveAt(0);
-            _currentTasks.Add(currentTask);
+            IMission currentTask = thread.Tasks[0];
+            thread.Tasks.RemoveAt(0);
+            thread.CurrentTasks.Add(currentTask);
             isMultipleTask = currentTask.IsMultypleTask;
 
             CreateNewTaskView(currentTask);
@@ -122,28 +133,35 @@ public class TaskController : MonoBehaviour
             _taskLayoutGroup.transform).GetComponent<TaskView>();
 
         newTaskView.Init(taskBase.TaskText, taskBase.GetProgress(), taskBase);
-        _taskViews.Add(newTaskView);
+        taskBase.ParentThread.TaskViews.Add(newTaskView);
     }
 
-    void SetAllTasksFromChilds()
+    void SetAllTasksFromChilds(MissionThread thread)
     {
-        foreach (var item in _tasksParentTransform)
+        foreach (var item in thread.TasksParentTransform)
         {
-            _tasks.Add(((Transform)item).GetComponent<IMission>());
+            thread.Tasks.Add(((Transform)item).GetComponent<TaskBase>());
         }
     }
-    void SetAllTaskViewsFromChilds()
+    void SetAllTaskViewsFromChilds(MissionThread thread)
     {
         foreach (var item in _taskLayoutGroup.transform)
         {
-            _taskViews.Add(((Transform)item).GetComponent<TaskView>());
+            thread.Tasks.Add(((Transform)item).GetComponent<TaskBase>());
         }
     }
 }
 
+[Serializable]
 public class MissionThread
 {
-    [SerializeField] private List<IMission> _tasks = new List<IMission>();
+    [SerializeField] private List<TaskBase> _tasks = new List<TaskBase>();
     [SerializeField] private List<IMission> _currentTasks = new List<IMission>();
     [SerializeField] private List<TaskView> _taskViews = new List<TaskView>();
+    [SerializeField] private Transform _tasksParentTransform;
+
+    public List<TaskBase> Tasks { get => _tasks; }
+    public List<IMission> CurrentTasks { get => _currentTasks; set => _currentTasks = value; }
+    public List<TaskView> TaskViews { get => _taskViews; set => _taskViews = value; }
+    public Transform TasksParentTransform { get => _tasksParentTransform; set => _tasksParentTransform = value; }
 }
