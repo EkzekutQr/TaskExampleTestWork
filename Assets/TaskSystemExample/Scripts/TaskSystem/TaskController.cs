@@ -140,14 +140,14 @@ public class TaskController : MonoBehaviour
     {
         foreach (var item in thread.TasksParentTransform)
         {
-            thread.Tasks.Add(((Transform)item).GetComponent<TaskBase>());
+            thread.Tasks.Add(((Transform)item).GetComponent<IMission>());
         }
     }
     void SetAllTaskViewsFromChilds(MissionThread thread)
     {
         foreach (var item in _taskLayoutGroup.transform)
         {
-            thread.Tasks.Add(((Transform)item).GetComponent<TaskBase>());
+            thread.Tasks.Add(((Transform)item).GetComponent<IMission>());
         }
     }
 }
@@ -155,13 +155,13 @@ public class TaskController : MonoBehaviour
 [Serializable]
 public class MissionThread
 {
-    [SerializeField] private List<TaskBase> _tasks = new List<TaskBase>();
+    [SerializeField] private List<IMission> _tasks = new List<IMission>();
     [SerializeField] private List<IMission> _currentTasks = new List<IMission>();
     [SerializeField] private List<TaskView> _taskViews = new List<TaskView>();
     [SerializeField] private Transform _tasksParentTransform;
 
-    public List<TaskBase> Tasks { get => _tasks; }
-    public List<IMission> CurrentTasks { get => _currentTasks; set => _currentTasks = value; }
-    public List<TaskView> TaskViews { get => _taskViews; set => _taskViews = value; }
+    public List<IMission> Tasks { get => _tasks; }
+    public List<IMission> CurrentTasks { get => _currentTasks; }
+    public List<TaskView> TaskViews { get => _taskViews; }
     public Transform TasksParentTransform { get => _tasksParentTransform; set => _tasksParentTransform = value; }
 }

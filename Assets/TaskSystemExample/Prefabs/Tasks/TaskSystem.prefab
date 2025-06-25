@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextTask: {fileID: 0}
-  taskText: kill Specific
+  taskText: kill red
   isMultypleTask: 0
   _isComleted: 0
   progressBar: {fileID: 0}
@@ -431,11 +431,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missionThreads:
-  - _tasks: []
-    _taskViews: []
+  - _taskViews: []
     _tasksParentTransform: {fileID: 1451804698349428863}
-  - _tasks: []
-    _taskViews: []
+  - _taskViews: []
     _tasksParentTransform: {fileID: 8467528077037587651}
   _taskLayoutGroup: {fileID: 2567443273353439202}
   _TaskViewPrefab: {fileID: 1011383794462700, guid: 5f41127bb6e874c41b485d4d58c08a5e, type: 3}
@@ -484,7 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextTask: {fileID: 0}
-  taskText: kill Specific
+  taskText: kill blue
   isMultypleTask: 0
   _isComleted: 0
   progressBar: {fileID: 0}
