@@ -8,13 +8,13 @@ public class TaskView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private Image progressBar;
-    [SerializeField] private TaskBase taskBase;
+    [SerializeField] private IMission taskBase;
 
     public TextMeshProUGUI Text { get => text; set => text = value; }
     public Image ProgressBar { get => progressBar; set => progressBar = value; }
-    public TaskBase TaskBase { get => taskBase; set => taskBase = value; }
+    public IMission TaskBase { get => taskBase; set => taskBase = value; }
 
-    public void Init(string text, float progress, TaskBase taskBase)
+    public void Init(string text, float progress, IMission taskBase)
     {
         UpdateText(text);
         UpdateProgressBar(progress);

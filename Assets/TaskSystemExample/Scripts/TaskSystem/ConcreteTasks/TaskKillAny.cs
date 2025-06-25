@@ -6,49 +6,50 @@ using UnityEngine;
 
 public class TaskKillAny : TaskBase
 {
-    private bool _isInited;
-
     [SerializeField] private ClickToDestroy _clickToDestroy;
     [SerializeField] private Unit _specificUnitPrefab;
 
-    private int unitCount = 0;
-    private int unitMaxCount = 0;
+    private int _unitCurrentCount = 0;
+    private int _unitMaxCount = 0;
 
-    public override void CompleteClause()
+
+    public override void MissionStart()
     {
-        if (!_isInited)
-            Init();
-        if (_isComleted)
-            onTaskCompleted.Invoke(this);
+        base.MissionStart();
+
+        _clickToDestroy = GameObject.FindFirstObjectByType<ClickToDestroy>();
+        _unitMaxCount = GameObject.FindObjectsOfType(_specificUnitPrefab.GetType()).Length;
+
+        _clickToDestroy.OnObjectDestroyed += CheckDestroyedObject;
+        OnFinished += _ => _clickToDestroy.OnObjectDestroyed -= CheckDestroyedObject;
+        RaiseOnStarted(this);
     }
 
-    private void Init()
+    public override void MissionUpdate()
     {
-        if (!_isInited)
-        {
-            _isInited = true;
-            _clickToDestroy = FindFirstObjectByType<ClickToDestroy>();
-            unitMaxCount = GameObject.FindObjectsOfType(_specificUnitPrefab.GetType()).Length;
 
-            _clickToDestroy.OnObjectDestroyed += CheckDestroyedObject;
-        }
     }
+
     private void CheckDestroyedObject(GameObject go)
     {
         if (go.TryGetComponent<Unit>(out Unit unit))
         {
-                unitCount++;
+                _unitCurrentCount++;
 
-            if (unitCount >= unitMaxCount)
+            if (_unitCurrentCount >= _unitMaxCount)
+            {
                 _isComleted = true;
+                RaiseOnMissionPointReached(this);
+                RaiseOnTaskFinished(this);
+            }
         }
     }
 
     public override float GetProgress()
     {
         float progress = 0;
-        if (unitMaxCount > 0)
-            progress = (float)unitCount / (float)unitMaxCount;
+        if (_unitMaxCount > 0)
+            progress = (float)_unitCurrentCount / (float)_unitMaxCount;
         return progress;
     }
 }

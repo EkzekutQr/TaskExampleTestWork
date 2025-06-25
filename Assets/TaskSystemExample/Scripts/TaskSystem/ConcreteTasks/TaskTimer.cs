@@ -8,30 +8,35 @@ public class TaskTimer : TaskBase
     [SerializeField] private int seconds = 120;
 
     private float _startTime;
-    private bool _isStartTimeSetted;
 
-    public override void CompleteClause()
+    public override void MissionStart()
     {
+        base.MissionStart();
+
         SetStartTime();
+
+        RaiseOnStarted(this);
+    }
+
+    public override void MissionUpdate()
+    {
         CheckCompleteClause();
-        if(_isComleted)
-            onTaskCompleted.Invoke(this);
     }
 
     private void SetStartTime()
     {
-        if (!_isStartTimeSetted)
-        {
             _startTime = Time.time;
-            _isStartTimeSetted = true;
-        }
     }
 
     private void CheckCompleteClause()
     {
         if (Time.time - _startTime >= seconds)
+        {
             //onTaskCompleted.Invoke(this);
             _isComleted = true;
+            RaiseOnMissionPointReached(this);
+            RaiseOnTaskFinished(this);
+        }
     }
 
     public override float GetProgress()
